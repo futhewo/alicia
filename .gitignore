@@ -1,0 +1,5 @@
+# Ignore pyc filed
+*.pyc
+
+# Ignore the local TODO
+TODO
