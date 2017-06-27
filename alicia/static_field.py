@@ -27,22 +27,66 @@
 
 # Imports #####################################################################
 import random
-import string
-import copy
 
-from alicia.field import *
+from alicia.element import *
+from alicia.content import *
 from alicia.utils import *
 
 
 
-# StaticField #############################################
-class StaticField(Field):
+# Field ########################################################################
+class StaticField(Element):
     """
-        A field that do not change.
+        A field is a leaf element, as such it has a value.
+        A static field cannot be modified.
     """
-    def __init__(self, value, name=None):
-        Field.__init__(self, value, len(value), len(value), [], name, False, False, False)
-        if name is None:
-            self.name = "StaticField {0}".format(self.elementId)
+
+    # Constructor =========================================
+    def __init__(self, value, content=None, name=None, weight=1.0):
+        Element.__init__(self, name, True, weight)
+        
         self.type = "StaticField"
+        self.setName(name)
  
+        # Usual and default values
+        self.default = value              # Default value
+        self.current = value              # Current value
+        self.future = value               # Future
+        
+        self.content = content
+
+    # Actioners ===========================================
+    # Built-ins ===========================================
+    def __str__(self):
+        """
+            Return a string representing the element.
+            @return (string)representation
+        """
+        string = "[{0}: {1} ({2})]\n".format(self.name, self.current, self.content)
+        return string
+
+
+    # Fuzzing =============================================
+    def compose(self):
+        """
+            Return the value of a field.
+        """
+        return self.current
+
+
+    def commit(self):
+        self.current = self.future
+
+
+    def clean(self):
+        """
+            Clean the field after having fuzzed it.
+        """
+        self.current = self.default
+        self.notifiable = True
+
+
+    # Parsing =============================================
+    def parse(self, value, backward=False, root=False):
+        pass
+
