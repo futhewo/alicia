@@ -27,6 +27,8 @@
 
 # Imports #####################################################################
 from nose.tools import *
+import random
+
 from alicia.utils import *
 
 
@@ -84,4 +86,10 @@ def test_flatten():
     assert_equals(flatten("test")       , "test")
     assert_equals(flatten([[[[["test"]]]]]), "test")
     assert_equals(flatten(["a", "b", "c"]), "abc")
-    assert_equals(flatten([["a", "b", "c"], "d", ["e", ["f", ["g"], "h"], "i"], "j"]), "abcdefghij") 
+    assert_equals(flatten([["a", "b", "c"], "d", ["e", ["f", ["g"], "h"], "i"], "j"]), "abcdefghij")
+
+def test_generateIndexes():
+    rand = random.Random(0)
+    randomness = 20
+    assert_equals(generateIndexes(5, rand, randomness), [2])
+

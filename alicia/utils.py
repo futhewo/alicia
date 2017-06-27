@@ -191,6 +191,7 @@ def error(string):
     """
     print "[ERROR] " + string
 
+
 def flatten(stringList):
     """
         Flatten a string list in one big string.
@@ -220,3 +221,25 @@ def flatten(stringList):
     else:
         # End of it
         return stringList
+
+
+def generateIndexes(size, rand, randomness):
+    """
+        Generate a list of indexes from a list of the provided size, pointing to elements that will be modified.
+        @param (int)size: the size of the list
+        @param (random.Random)rand: the random object that will decide
+        @param (int)randomess: the randomness rate
+    """
+    indexes = []
+    for index in range(size):
+        if rand.randint(0, 99) < randomness:
+            indexes.append(index)
+
+    if len(indexes) == 0:
+        if size == 0:
+            indexes.append(0)
+        else:
+            indexes.append(rand.randint(0, size - 1))
+
+    return indexes
+
