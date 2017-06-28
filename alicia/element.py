@@ -132,7 +132,7 @@ class Element(object):
             Basic fuzzing.
             @param (int)steps: the fuzz-case reference
         """
-        pass
+        debug("Fuzzing {0}: {1}-{2}:".format(self.type, self.name, steps), configuration.verbose)
 
 
     def overflow(self, steps):
@@ -140,7 +140,7 @@ class Element(object):
             Fuzzing aiming to overflow buffers.
             @param (int)steps
         """
-        pass
+        debug("Overflow {0}: {1}-{2}:".format(self.type, self.name, steps), configuration.verbose)
 
 
     def compose(self):
@@ -166,7 +166,7 @@ class Element(object):
 
 
     # Fuzzing on details ==================================
-    def newFuzzedSubElement(self, steps, rand):
+    def newFuzzedSubElement(self, rand):
         """
             Generate and return a new subElement according to the given random parameters.
             @param (int)steps
@@ -175,7 +175,7 @@ class Element(object):
         return None
 
 
-    def mutation(self, workingList, steps, rand, index):
+    def mutation(self, workingList, rand, index):
         """
             Mute a specific element of the workingList
             @param (list)workingList
@@ -184,13 +184,13 @@ class Element(object):
             @param (int)index: index of the element to mute.
         """
         assert(len(workingList) > index >= 0)
-        debug("Fuzzing: {0} ({1}): Modifying {2}".format(self.name, steps, index), configuration.verbose)
-        newListElement = self.newFuzzedSubElement(steps, rand)
+        debug("  Modifying {0}".format(index), configuration.verbose)
+        newListElement = self.newFuzzedSubElement(rand)
         workingList[index] = newListElement
         return workingList
 
 
-    def swap(self, workingList, steps, rand, index):
+    def swap(self, workingList, rand, index):
         """
             Move an element from one place to another in the workingList.
             @param (list)workingList
@@ -201,7 +201,7 @@ class Element(object):
         assert(len(workingList) > 1)
         assert(index >= 0)
         newIndex = rand.randint(0, len(workingList) - 1)
-        debug(">Fuzzing: {0} ({1}): Swap {2} with {3}".format(self.name, steps, index, newIndex), configuration.verbose)
+        debug("  Swap {0} with {1}".format(index, newIndex), configuration.verbose)
 
         # This poor hack definitely favored the switch of two consecutive elements, which is clearly a good thing eventually.
         if newIndex == index:
