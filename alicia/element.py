@@ -165,6 +165,54 @@ class Element(object):
         pass
 
 
+    # Fuzzing on details ==================================
+    def newFuzzedSubElement(self, steps, rand):
+        """
+            Generate and return a new subElement according to the given random parameters.
+            @param (int)steps
+            @param (random.Random)rand
+        """
+        return None
+
+
+    def mutation(self, workingList, steps, rand, index):
+        """
+            Mute a specific element of the workingList
+            @param (list)workingList
+            @param (int)steps
+            @param (random.Random)rand
+            @param (int)index: index of the element to mute.
+        """
+        assert(len(workingList) > index >= 0)
+        debug("Fuzzing: {0} ({1}): Modifying {2}".format(self.name, steps, index), configuration.verbose)
+        newListElement = self.newFuzzedSubElement(steps, rand)
+        workingList[index] = newListElement
+        return workingList
+
+
+    def swap(self, workingList, steps, rand, index):
+        """
+            Move an element from one place to another in the workingList.
+            @param (list)workingList
+            @param (int)steps
+            @param (random.Random)rand
+            @param (int)index: index of the element to swap.
+        """
+        assert(len(workingList) > 1)
+        assert(index >= 0)
+        newIndex = rand.randint(0, len(workingList) - 1)
+        debug(">Fuzzing: {0} ({1}): Swap {2} with {3}".format(self.name, steps, index, newIndex), configuration.verbose)
+
+        # This poor hack definitely favored the switch of two consecutive elements, which is clearly a good thing eventually.
+        if newIndex == index:
+            newIndex = (newIndex + 1) % (len(workingValue) - 1)
+        mem = workingList[index]
+        workingList[index] = workingList[newIndex]
+        workingList[newIndex] = mem
+
+        return workingList
+
+
     # Parsing =============================================
     def parse(self, value):
         """
