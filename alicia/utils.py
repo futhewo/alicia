@@ -36,7 +36,7 @@ def twoscomp(integer, size):
     return ti
 
 
-def ui2bs(integer, endianness="be"):
+def ui2bs(integer, littleEndian=False):
     """
         Unsigned integer to byte string.
     """
@@ -48,20 +48,20 @@ def ui2bs(integer, endianness="be"):
     while ui > 0:
         bs = chr(ui & 0xFF) + bs
         ui = ui >> 8
-    if endianness == "le":
+    if littleEndian:
         lr = list(bs)
         lr.reverse()
         bs = "".join(lr)
     return bs
 
 
-def bs2ui(bytestring, endianness="be"):
+def bs2ui(bytestring, littleEndian=False):
     """
         Byte String to unsigned integer.
     """
     ui = 0
     bs = bytestring
-    if endianness == "le":
+    if littleEndian:
         lr = list(bs)
         lr.reverse()
         bs = ''.join(lr)
@@ -71,7 +71,7 @@ def bs2ui(bytestring, endianness="be"):
     return ui
 
 
-def i2sbs(integer, size, endianness="be"):
+def i2sbs(integer, size, littleEndian=False):
     """
         Integer to sized byte string.
         Fill with 0x00 an integer on a byte string representation.
@@ -80,21 +80,21 @@ def i2sbs(integer, size, endianness="be"):
     if i < 0:
         i = twoscomp(-i, size)
 
-    bs = ui2bs(i, endianness)
+    bs = ui2bs(i, littleEndian)
     if size > len(bs):
-        if endianness == "le":
+        if littleEndian:
             bs += "\x00" * (size - len(bs))
         else:
             bs = "\x00" * (size - len(bs)) + bs
     elif size < len(bs):
-        if endianness == "le":
+        if littleEndian:
             bs = bs[-size:]
         else:
             bs = bs[:size]
     return bs
 
 
-def sbs2i(bytestring, signed=False, endianness="be"):
+def sbs2i(bytestring, signed=False, littleEndian=False):
     """
         Signed byte string to integer.
     """
@@ -102,17 +102,17 @@ def sbs2i(bytestring, signed=False, endianness="be"):
     i = 0
     if signed:
         negative = False
-        if endianness == "le":
+        if littleEndian:
             negative = (0x80 & ord(bs[len(bs) - 1])) != 0
         else:
             negative = (0x80 & ord(bs[0])) != 0
 
-        i = bs2ui(bytestring, endianness)
+        i = bs2ui(bytestring, littleEndian)
         if negative:
             i = -twoscomp(i, len(bytestring))
 
     else:
-        i = bs2ui(bytestring, endianness)
+        i = bs2ui(bytestring, littleEndian)
     return i
 
 

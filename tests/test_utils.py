@@ -76,8 +76,8 @@ def test_sbs2i():
     assert_equals(sbs2i("\xE3\xB5\xE5") , 14923237)
     assert_equals(sbs2i("\x00\xE3\xB5\xE5", True) , 14923237)
     assert_equals(sbs2i("\xFF\x1C\x4A\x1B", True) , -14923237)
-    assert_equals(sbs2i("\x00\x00\x00", endianness="le"), 0)
-    assert_equals(sbs2i("\xE5\xB5\xE3", endianness="le"), 14923237)
+    assert_equals(sbs2i("\x00\x00\x00", littleEndian=True), 0)
+    assert_equals(sbs2i("\xE5\xB5\xE3", littleEndian=True), 14923237)
     assert_equals(sbs2i("\xE5\xB5\xE3\x00", True, "le"), 14923237)
     assert_equals(sbs2i("\x1B\x4A\x1C\xFF", True, "le"), -14923237)
 
