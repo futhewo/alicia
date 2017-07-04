@@ -86,16 +86,6 @@ class IntegerContent(object):
         self.update(i2sbs(integerValue, self.size, self.littleEndian))
 
 
-    def commit(self):
-        self.current = self.future
-        self.integerCurrent = sbs2i(self.current, self.signed, self.littleEndian)
-
-
-    def clean(self):
-        self.current = self.default
-        self.integerCurrent = sbs2i(self.current, self.signed, self.littleEndian)
-
-
     # Fuzzing =============================================
     def newCharacter(self, rand):
         """

@@ -53,11 +53,11 @@ class Content(object):
 
 
     def commit(self):
-        self.current = self.future
+        self.update(self.future)
 
 
     def clean(self):
-        self.current = self.default
+        self.update(self.default)
 
 
     # Fuzzing =============================================
