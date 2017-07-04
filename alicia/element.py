@@ -205,7 +205,7 @@ class Element(object):
 
         # This poor hack definitely favored the switch of two consecutive elements, which is clearly a good thing eventually.
         if newIndex == index:
-            newIndex = (newIndex + 1) % (len(workingValue) - 1)
+            newIndex = (newIndex + 1) % (len(workingList) - 1)
         mem = workingList[index]
         workingList[index] = workingList[newIndex]
         workingList[newIndex] = mem
