@@ -71,10 +71,10 @@ class Content(object):
     def fuzz(self, minSize, maxSize, rand, steps):
         """
             Fuzz the given value that needs to stay in the size range.
-            @param (string)value: the value to be fuzzed
             @param (int)minSize
             @param (int)maxSize
             @param (random.Random)rand
+            @param (int)steps
         """
         value = ""
         for i in range(rand.randint(minSize, maxSize)):
