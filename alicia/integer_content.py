@@ -27,9 +27,12 @@
 # Imports #####################################################################
 from utils import *
 
+from content import *
 
-# Element #####################################################################
-class IntegerContent(object):
+
+
+# IntegerContent ##############################################################
+class IntegerContent(Content):
     """
         Defines constraints on the content of a field.
     """
