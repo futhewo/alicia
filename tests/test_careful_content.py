@@ -59,7 +59,7 @@ def test_CarefulContent_newCharacter():
     assert_equals(content0.newCharacter(rand), "E")
 
 
-def test_CarefulContent_compose():
+def test_CarefulContent_fuzz():
     content0 = CarefulContent("ABCDE")
     rand = random.Random(0)
     content0.fuzz(5, 5, rand, 0)

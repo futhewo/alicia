@@ -59,11 +59,6 @@ def test_Content_update():
     assert_equals(content0.current          , "FGHIJ")
     
 
-def test_Content_compose():
-    content0 = Content("ABCDE")
-    assert_equals(content0.compose()        , "ABCDE")
-
-
 def test_Content_commit():
     content0 = Content("ABCDE")
     content0.future = "FGHIJ"
@@ -84,7 +79,7 @@ def test_Content_newCharacter():
     assert_equals(content0.newCharacter(rand), "\xd8")
 
 
-def test_Content_compose():
+def test_Content_fuzz():
     content0 = Content("ABCDE")
     rand = random.Random(0)
     content0.fuzz(5, 5, rand, 0)
