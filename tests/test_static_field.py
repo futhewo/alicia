@@ -30,6 +30,8 @@ from nose.tools import *
 
 from alicia.configuration import *
 from alicia.static_field import *
+from alicia.string_content import *
+from alicia.integer_content import *
 from alicia.utils import *
 
 
@@ -42,11 +44,12 @@ def teardown():
     pass
 
 
-# Field #######################################################################
+# StaticField #################################################################
 def test_StaticField___init__():
     global elementId
     elementId = 0
-    element0 = StaticField("ABCDE")
+    content0 = StringContent("ABCDE")
+    element0 = StaticField(content0)
     assert_equals(element0.elementId        , 0)
     assert_equals(element0.type             , "StaticField")
     assert_equals(element0.name             , "StaticField 0")
@@ -55,13 +58,10 @@ def test_StaticField___init__():
     assert_equals(element0.boundElements    , [])
     assert_equals(element0.notifiable       , True)
     assert_equals(element0.parsed           , False)
-    assert_equals(element0.default          , "ABCDE")
-    assert_equals(element0.current          , "ABCDE")
-    assert_equals(element0.future           , "ABCDE")
-    assert_equals(element0.content          , None)
+    assert_equals(element0.content          , content0)
 
-    content0 = Content()
-    element1 = StaticField("ABCDE", content=content0, name="My StaticField", weight=2.0)
+    content1 = IntegerContent(12345)
+    element1 = StaticField(content1, name="My StaticField", weight=2.0)
     assert_equals(element1.elementId        , 1)
     assert_equals(element1.type             , "StaticField")
     assert_equals(element1.name             , "My StaticField")
@@ -70,32 +70,33 @@ def test_StaticField___init__():
     assert_equals(element1.boundElements    , [])
     assert_equals(element1.notifiable       , True)
     assert_equals(element1.parsed           , False)
-    assert_equals(element1.default          , "ABCDE")
-    assert_equals(element1.current          , "ABCDE")
-    assert_equals(element1.future           , "ABCDE")
-    assert_equals(element1.content.type     , "Content")
+    assert_equals(element1.content          , content1)
 
    
 def test_StaticField___str__():
-    element0 = StaticField("ABCDE", content="TEST", name="My StaticField", weight=2.0)
-    assert_equals(str(element0)             , "[My StaticField: ABCDE (TEST)]\n")
+    content0 = StringContent("ABCDE")
+    element0 = StaticField(content0, name="My StaticField", weight=2.0)
+    assert_equals(str(element0)             , "[My StaticField: ABCDE (StringContent)]\n")
 
 
 def test_StaticField_compose():
-    element0 = StaticField("ABCDE")
+    content0 = StringContent("ABCDE")
+    element0 = StaticField(content0)
     assert_equals(element0.compose()       , "ABCDE") 
 
 
 def test_StaticField_commit():
-    element0 = StaticField("ABCDE")
-    element0.future = "FGHEI"
+    content0 = StringContent("ABCDE")
+    element0 = StaticField(content0)
+    element0.content.future = "FGHEI"
     element0.commit()
-    assert_equals(element0.current         , "FGHEI") 
+    assert_equals(element0.compose()       , "FGHEI") 
 
 
 def test_StaticField_clean():
-    element0 = StaticField("ABCDE")
-    element0.current = "FGHEI"
+    content0 = StringContent("ABCDE")
+    element0 = StaticField(content0)
+    element0.content.current = "FGHEI"
     element0.clean()
-    assert_equals(element0.current         , "ABCDE")
- 
+    assert_equals(element0.compose()       , "ABCDE")
+

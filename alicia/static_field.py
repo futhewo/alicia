@@ -42,17 +42,12 @@ class StaticField(Element):
     """
 
     # Constructor =========================================
-    def __init__(self, value, content=None, name=None, weight=1.0):
+    def __init__(self, content, name=None, weight=1.0):
         Element.__init__(self, name, True, weight)
         
         self.type = "StaticField"
         self.setName(name)
  
-        # Usual and default values
-        self.default = value              # Default value
-        self.current = value              # Current value
-        self.future = value               # Future
-        
         self.content = content
 
     # Actioners ===========================================
@@ -62,7 +57,7 @@ class StaticField(Element):
             Return a string representing the element.
             @return (string)representation
         """
-        string = "[{0}: {1} ({2})]\n".format(self.name, self.current, self.content)
+        string = "[{0}: {1} ({2})]\n".format(self.name, self.compose(), self.content.type)
         return string
 
 
@@ -71,18 +66,18 @@ class StaticField(Element):
         """
             Return the value of a field.
         """
-        return self.current
+        return self.content.current
 
 
     def commit(self):
-        self.current = self.future
+        self.content.commit()
 
 
     def clean(self):
         """
             Clean the field after having fuzzed it.
         """
-        self.current = self.default
+        self.content.clean()
         self.notifiable = True
 
 
