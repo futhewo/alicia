@@ -132,7 +132,7 @@ class Element(object):
             Basic fuzzing.
             @param (int)steps: the fuzz-case reference
         """
-        debug("Fuzzing {0}: {1}-{2}:".format(self.type, self.name, steps), configuration.verbose)
+        debug("Fuzzing {0}: \"{1}\" - {2}:".format(self.type, self.name, steps), configuration.verbose)
 
 
     def overflow(self, steps):
@@ -140,7 +140,7 @@ class Element(object):
             Fuzzing aiming to overflow buffers.
             @param (int)steps
         """
-        debug("Overflow {0}: {1}-{2}:".format(self.type, self.name, steps), configuration.verbose)
+        debug("Overflow {0}: \"{1}\" - {2}:".format(self.type, self.name, steps), configuration.verbose)
 
 
     def compose(self):

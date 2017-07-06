@@ -74,6 +74,7 @@ class BinaryContent(Content):
             @param (random.Random)rand
             @param (int)steps
         """
+        debug("  Fuzzing as {0}".format(self.type), configuration.verbose)
         # Sequential bit flip
         if steps < len(self.binaryCurrent):
             # Bit flip

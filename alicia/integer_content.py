@@ -25,6 +25,7 @@
 
 
 # Imports #####################################################################
+from configuration import *
 from utils import *
 
 from content import *
@@ -106,6 +107,7 @@ class IntegerContent(Content):
             @param (int)steps
         """
         assert(self.size == maxSize == minSize)
+        debug("  Fuzzing as {0}".format(self.type), configuration.verbose)
         integerValue = 0
         # Starting with the most classical attack vectors for integer.
 

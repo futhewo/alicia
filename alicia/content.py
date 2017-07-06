@@ -25,6 +25,8 @@
 
 
 # Imports #####################################################################
+from configuration import *
+from utils import *
 
 
 
@@ -76,6 +78,7 @@ class Content(object):
             @param (random.Random)rand
             @param (int)steps
         """
+        debug("  Fuzzing as {0}".format(self.type), configuration.verbose)
         value = ""
         for i in range(rand.randint(minSize, maxSize)):
             value += self.newCharacter(rand)

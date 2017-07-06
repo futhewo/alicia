@@ -34,7 +34,7 @@ from alicia.utils import *
 
 
 
-# Field ########################################################################
+# CloseField ##################################################################
 class CloseField(StaticField):
     """
         A leaf element. Has a value.
@@ -62,6 +62,7 @@ class CloseField(StaticField):
         """
             Fuzz, through mutation, the predefined value.
         """
+        Element.fuzz(self, steps)
         rand = random.Random(steps)
         fuzzType = rand.randint(0, 1)
 

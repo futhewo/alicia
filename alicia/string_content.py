@@ -28,7 +28,8 @@
 import string
 
 from content import *
-
+from configuration import *
+from utils import *
 
 
 # StringContent ###############################################################
@@ -176,6 +177,7 @@ class StringContent(Content):
             @param (random.Random)rand
             @param (int)steps
         """
+        debug("  Fuzzing as {0}".format(self.type), configuration.verbose)
         insertValue = rand.choice(StringContent.attackVectors)
         value = ""
         if len(insertValue) > maxSize:
