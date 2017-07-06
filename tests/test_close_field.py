@@ -44,7 +44,7 @@ def teardown():
     pass
 
 
-# Field #######################################################################
+# CloseField ##################################################################
 def test_CloseField___init__():
     global elementId
     elementId = 0
