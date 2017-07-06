@@ -32,19 +32,15 @@ import random
 
 # Constants ###################################################################
 # For 'fuzzing' type
-NOPE        = 0
+OVERFLOW    = 0
 FUZZING     = 1
-OVERFLOWING = 2
-RANDOMING   = 3
+
 
 # For 'mutation' type
-MOVING      = 0
-REMOVING    = 1
-ADDING      = 2
-REPEAT      = 3
-MUTATION    = 4
-SNIPEADD    = 5
-SNIPEMUTE   = 6
+ADD         = 0
+MUTATION    = 1
+SWAP        = 2
+REMOVE      = 3
 
 
 
@@ -65,14 +61,12 @@ class Configuration:
     
         # Flags
         self.fuzzing        = True
-        self.overflowing    = True
-        self.randoming      = False
+        self.overflow       = True
         
         # Misc
         self.fuzzingNumber  = 100
         self.overflowNumber = 10
-        self.randomNumber   = 100
-        self.randomRate     = 20
+        self.randomness     = 20 # 20%
         self.charRepeat     = 32
         self.subElemRepeat  = 32
 
@@ -81,12 +75,6 @@ class Configuration:
         self.defaultMinSize = 128
         self.defaultMaxSize = 128
 
-        # Overflow
-        # The overlowing pattern is of size randint(overflowMin, overflowMax) ** agressivity
-        self.agressivity    = 1
-        self.overflowMin    = 100
-        self.overflowMax    = 200
-
 
 # Construction of the current configuration object.
-conf = Configuration()
+configuration = Configuration()
