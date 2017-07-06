@@ -175,11 +175,30 @@ class Element(object):
         return None
 
 
+    def add(self, workingList, rand, index, indexes):
+        """
+            Add a specific element to the workingList
+            @param (list)workingList
+            @param (random.Random)rand
+            @param (int)index: index of the element to mute.
+            @param (int)indexes: all indexes to be changed.
+        """
+        assert(len(workingList) >= index >= 0)
+        debug("  Adding in {0}".format(index), configuration.verbose)
+        newListElement = self.newFuzzedSubElement(rand)
+        workingList.insert(index, newListElement)
+         # Rectify all other indexes to take into account the adding of this one.
+        for i in range(len(indexes)):
+            if indexes[i] > index:
+                indexes[i] += 1
+
+        return workingList
+
+
     def mutation(self, workingList, rand, index):
         """
             Mute a specific element of the workingList
             @param (list)workingList
-            @param (int)steps
             @param (random.Random)rand
             @param (int)index: index of the element to mute.
         """
@@ -194,7 +213,6 @@ class Element(object):
         """
             Move an element from one place to another in the workingList.
             @param (list)workingList
-            @param (int)steps
             @param (random.Random)rand
             @param (int)index: index of the element to swap.
         """
@@ -209,6 +227,25 @@ class Element(object):
         mem = workingList[index]
         workingList[index] = workingList[newIndex]
         workingList[newIndex] = mem
+
+        return workingList
+
+
+    def remove(self, workingList, rand, index, indexes):
+        """
+            Remove a specific element of the workingList
+            @param (list)workingList
+            @param (random.Random)rand
+            @param (int)index: index of the element to mute.
+            @param (int)indexes: all indexes to be changed.
+        """
+        assert(len(workingList) > index >= 0)
+        debug("  Removing {0}".format(index), configuration.verbose)
+        workingList.pop(index)
+        # Rectify all other indexes to take into account the removal of this one.
+        for i in range(len(indexes)):
+            if indexes[i] > index:
+                indexes[i] -= 1
 
         return workingList
 

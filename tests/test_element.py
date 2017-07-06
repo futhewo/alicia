@@ -85,6 +85,15 @@ def test_element_forecast():
     # To be retested for each subElements.
 
 
+def test_element_add():
+    element0 = Element()
+    rand = random.Random(0)
+    workingList = ["a", "b", "c", "d", "e"]
+    indexes = [2, 4]
+    assert_equals(element0.add(workingList, rand, 3, indexes), ["a", "b", "c", None, "d", "e"])
+    assert_equals(indexes                   , [2, 5])
+
+
 def test_element_mutation():
     element0 = Element()
     rand = random.Random(0)
@@ -98,5 +107,13 @@ def test_element_swap():
     workingList = ["a", "b", "c", "d", "e"]
     assert_equals(''.join(element0.swap(workingList, rand, 1)), "aecdb")
 
+
+def test_element_remove():
+    element0 = Element()
+    rand = random.Random(0)
+    workingList = ["a", "b", "c", "d", "e"]
+    indexes = [2, 4]
+    assert_equals(element0.remove(workingList, rand, 2, indexes), ["a", "b", "d", "e"])
+    assert_equals(indexes                   , [2, 3])
 
 
