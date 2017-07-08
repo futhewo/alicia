@@ -45,12 +45,8 @@ def teardown():
 
 # Element #####################################################################
 def test_Element___init__():
-    global elementId
-    elementId = 0
     element0 = Element()
-    assert_equals(element0.elementId        , 0)
     assert_equals(element0.type             , "Element")
-    assert_equals(element0.name             , "Element 0")
     assert_equals(element0.static           , False)
     assert_equals(element0.weight           , 1.0)
     assert_equals(element0.boundElements    , [])
@@ -58,7 +54,6 @@ def test_Element___init__():
     assert_equals(element0.parsed           , False)
 
     element1 = Element(name="My Element", static=True, weight=2.0)
-    assert_equals(element1.elementId        , 1)
     assert_equals(element1.type             , "Element")
     assert_equals(element1.name             , "My Element")
     assert_equals(element1.static           , True)

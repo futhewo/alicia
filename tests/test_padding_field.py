@@ -47,13 +47,9 @@ def teardown():
 
 # PaddingField ################################################################
 def test_PaddingField___init__():
-    global elementId
-    elementId = 0
     content0 = StringContent("#")
     element0 = PaddingField(content0, 32, [])
-    assert_equals(element0.elementId        , 0)
     assert_equals(element0.type             , "PaddingField")
-    assert_equals(element0.name             , "PaddingField 0")
     assert_equals(element0.static           , False)
     assert_equals(element0.weight           , 1.0)
     assert_equals(element0.boundElements    , [])
@@ -67,7 +63,6 @@ def test_PaddingField___init__():
     content1 = IntegerContent(12345)
     element1 = StaticField(content1, name="My StaticField")
     element2 = PaddingField(content0, 24, [element1], name="My PaddingField", weight=2.5)
-    assert_equals(element2.elementId        , 2)
     assert_equals(element2.type             , "PaddingField")
     assert_equals(element2.name             , "My PaddingField")
     assert_equals(element2.static           , False)

@@ -46,13 +46,9 @@ def teardown():
 
 # CloseField ##################################################################
 def test_CloseField___init__():
-    global elementId
-    elementId = 0
     content0 = StringContent("ABCDE")
     element0 = CloseField(content0)
-    assert_equals(element0.elementId        , 0)
     assert_equals(element0.type             , "CloseField")
-    assert_equals(element0.name             , "CloseField 0")
     assert_equals(element0.static           , False)
     assert_equals(element0.weight           , 1.0)
     assert_equals(element0.boundElements    , [])
@@ -62,7 +58,6 @@ def test_CloseField___init__():
 
     content1 = IntegerContent(12345)
     element1 = CloseField(content1, name="My CloseField", weight=2.0)
-    assert_equals(element1.elementId        , 1)
     assert_equals(element1.type             , "CloseField")
     assert_equals(element1.name             , "My CloseField")
     assert_equals(element1.static           , False)

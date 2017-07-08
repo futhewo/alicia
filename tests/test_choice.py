@@ -49,13 +49,9 @@ def teardown():
 
 # Choice ######################################################################
 def test_Choice___init__():
-    global elementId
-    elementId = 0
     element0 = Element()
     node0 = Choice([element0])
-    assert_equals(node0.elementId           , 1)
     assert_equals(node0.type                , "Choice")
-    assert_equals(node0.name                , "Choice 1")
     assert_equals(node0.static              , False)
     assert_equals(node0.weight              , 1.0)
     assert_equals(node0.defaultSubElements  , [element0])
@@ -68,7 +64,6 @@ def test_Choice___init__():
 
     element1 = Element()
     node1 = Choice([element0, element1], choice=1, name="My Choice", static=True, weight=2.5)
-    assert_equals(node1.elementId           , 3)
     assert_equals(node1.type                , "Choice")
     assert_equals(node1.name                , "My Choice")
     assert_equals(node1.static              , True)

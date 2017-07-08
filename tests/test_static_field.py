@@ -46,13 +46,9 @@ def teardown():
 
 # StaticField #################################################################
 def test_StaticField___init__():
-    global elementId
-    elementId = 0
     content0 = StringContent("ABCDE")
     element0 = StaticField(content0)
-    assert_equals(element0.elementId        , 0)
     assert_equals(element0.type             , "StaticField")
-    assert_equals(element0.name             , "StaticField 0")
     assert_equals(element0.static           , True)
     assert_equals(element0.weight           , 1.0)
     assert_equals(element0.boundElements    , [])
@@ -62,7 +58,6 @@ def test_StaticField___init__():
 
     content1 = IntegerContent(12345)
     element1 = StaticField(content1, name="My StaticField", weight=2.0)
-    assert_equals(element1.elementId        , 1)
     assert_equals(element1.type             , "StaticField")
     assert_equals(element1.name             , "My StaticField")
     assert_equals(element1.static           , True)

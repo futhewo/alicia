@@ -49,13 +49,9 @@ def teardown():
 
 # Node ########################################################################
 def test_Node___init__():
-    global elementId
-    elementId = 0
     element0 = Element()
     node0 = Node([element0])
-    assert_equals(node0.elementId           , 1)
     assert_equals(node0.type                , "Node")
-    assert_equals(node0.name                , "Node 1")
     assert_equals(node0.static              , False)
     assert_equals(node0.weight              , 1.0)
     assert_equals(node0.defaultSubElements  , [element0])
@@ -65,7 +61,6 @@ def test_Node___init__():
 
     element1 = Element()
     node1 = Node([element0, element1], name="My Node", static=True, weight=2.5)
-    assert_equals(node1.elementId           , 3)
     assert_equals(node1.type                , "Node")
     assert_equals(node1.name                , "My Node")
     assert_equals(node1.static              , True)

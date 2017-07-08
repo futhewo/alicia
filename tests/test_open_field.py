@@ -46,13 +46,9 @@ def teardown():
 
 # OpenField ###################################################################
 def test_OpenField___init__():
-    global elementId
-    elementId = 0
     content0 = StringContent("ABCDE")
     element0 = OpenField(content0, 32)
-    assert_equals(element0.elementId        , 0)
     assert_equals(element0.type             , "OpenField")
-    assert_equals(element0.name             , "OpenField 0")
     assert_equals(element0.static           , False)
     assert_equals(element0.weight           , 1.0)
     assert_equals(element0.boundElements    , [])
@@ -64,7 +60,6 @@ def test_OpenField___init__():
 
     content1 = IntegerContent(12345)
     element1 = OpenField(content1, 4, minSize=2, name="My OpenField", weight=2.0)
-    assert_equals(element1.elementId        , 1)
     assert_equals(element1.type             , "OpenField")
     assert_equals(element1.name             , "My OpenField")
     assert_equals(element1.static           , False)
