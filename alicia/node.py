@@ -54,6 +54,9 @@ class Node(Element):
 
     # Actioners ===========================================
     def getSize(self):
+        """
+            Concatenate the size of all subElements.
+        """
         size = 0
         for subElement in self.currentSubElements:
             size += subElement.getSize()
