@@ -58,6 +58,11 @@ class CloseField(StaticField):
 
     # Built-ins ===========================================
     # Fuzzing =============================================
+    def preForecast(self):
+        self.fuzzNumber = self.weight * configuration.fuzzingNumber
+        self.overflowNumber = self.weight * configuration.overflowNumber
+
+
     def fuzz(self, steps):
         """
             Fuzz, through mutation, the predefined value.

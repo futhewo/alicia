@@ -80,6 +80,21 @@ def test_CloseField_update():
     assert_equals(element0.content.current  , "FGHIJ")
 
 
+def test_CloseField_preForecast():
+    content0 = StringContent("ABCDE")
+    element0 = CloseField(content0)
+    element0.preForecast()
+    assert_equals(element0.fuzzNumber       , 100.0)
+    assert_equals(element0.overflowNumber   , 10.0)
+
+    element1 = CloseField(content0, weight=2.5)
+    configuration.fuzzingNumber = 1000
+    configuration.overflowNumber = 4
+    element1.preForecast()
+    assert_equals(element1.fuzzNumber       , 2500.0)
+    assert_equals(element1.overflowNumber   , 10.0)
+
+
 def test_CloseField_fieldFuzz():
     content0 = StringContent("AAAAABBBBBCCCCCDDDDDEEEEEFFFFFGGGGG")
     element0 = CloseField(content0)
