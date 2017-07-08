@@ -54,6 +54,7 @@ class CloseField(StaticField):
     # Actioners ===========================================
     def update(self, value):
         self.content.update(value)
+        self.pushNotification()
 
 
     # Built-ins ===========================================
@@ -73,6 +74,7 @@ class CloseField(StaticField):
 
         if fuzzType == 0:
             self.content.fuzz(self.size, self.size, rand, steps)
+            self.pushNotification()
         else:
             self.fieldFuzz(rand)
 

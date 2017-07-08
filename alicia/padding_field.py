@@ -80,8 +80,7 @@ class PaddingField(OpenField):
             Called when the base field is modified in order to update the size.
             Its value is stuffed with padder in order that its value concatenated to the value of the base field have a size multiple of the padding size.
         """
-        if self.notifiable:
-            self.update(self.padder * self.computeSize())
+        self.update(self.padder * self.computeSize())
 
 
     def computeSize(self):

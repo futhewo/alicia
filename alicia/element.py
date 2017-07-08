@@ -93,12 +93,10 @@ class Element(object):
 
 
     # Notification ========================================    
-    def update(self, value):
+    def pushNotification(self):
         """
-            Update the value and notify the fields that depends on this field to update their value too.
-            @param (string)value: the value to be updated to.
+            Notify the fields that depends on this field to update their value too.
         """
-        self.value = value
         for field in self.boundElements:
             field.notify()
 

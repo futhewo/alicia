@@ -166,6 +166,7 @@ class Node(Element):
             (subElementIndex, remainingStep) = self.getSubElementAfterFuzzSteps(steps)
             # Fuzz it
             self.currentSubElements[subElementIndex].fuzz(remainingStep)
+        self.pushNotification()
 
 
     def overflow(self, steps):
@@ -187,6 +188,7 @@ class Node(Element):
             (subElementIndex, remainingStep) = self.getSubElementAfterOverflowSteps(steps)
             # Fuzz it
             self.subElements[subElementIndex].overflow(remainingStep)
+        self.pushNotification()
 
         
     def compose(self):
@@ -261,6 +263,7 @@ class Node(Element):
         # Recursive call over the subElements
         for subElement in self.currentSubElements:
             subElement.clean()
+        self.pushNotification()
 
 
     def commit(self):
@@ -272,6 +275,7 @@ class Node(Element):
         # Recursive call over the subElements
         for subElement in self.currentSubElements:
             subElement.commit()
+        self.pushNotification()
 
 
     # Parsing =============================================

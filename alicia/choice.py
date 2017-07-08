@@ -84,6 +84,7 @@ class Choice(Node):
             # Fuzz it
             self.currentSubElements[subElementIndex].fuzz(remainingStep)
             self.currentChoice = subElementIndex
+        self.pushNotification()
 
 
     def overflow(self, steps):
@@ -106,6 +107,7 @@ class Choice(Node):
             # Fuzz it
             self.subElements[subElementIndex].overflow(remainingStep)
             self.currentChoice = subElementIndex
+        self.pushNotification()
 
         
     def compose(self):
@@ -141,11 +143,13 @@ class Choice(Node):
     def clean(self):
         Node.clean(self)
         self.currentChoice = self.defaultChoice
+        self.pushNotification()
 
 
     def commit(self):
         Node.commit(self)
         self.currentChoice = self.futureChoice
+        self.pushNotification()
 
 
     # Parsing =============================================
