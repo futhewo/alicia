@@ -72,7 +72,13 @@ def test_StaticField___init__():
     assert_equals(element1.parsed           , False)
     assert_equals(element1.content          , content1)
 
-   
+
+def test_StaticField_getSize():
+    content0 = StringContent("ABCDE")
+    element0 = StaticField(content0)
+    assert_equals(element0.getSize()       , 5)
+
+
 def test_StaticField___str__():
     content0 = StringContent("ABCDE")
     element0 = StaticField(content0, name="My StaticField", weight=2.0)

@@ -75,6 +75,22 @@ def test_Node___init__():
     assert_equals(node1.futureSubElements   , [element0, element1])
 
 
+def test_Node_getSize():
+    content0 = StringContent("ABCDE")
+    content1 = IntegerContent(32)
+    element0 = CloseField(content0)
+    element1 = CloseField(content1)
+    node0 = Node([element0])
+    node1 = Node([node0, element1])
+    node2 = Node([])
+    node3 = Node([node1, node2])
+
+    assert_equals(node0.getSize()           , 5)
+    assert_equals(node1.getSize()           , 9)
+    assert_equals(node2.getSize()           , 0)
+    assert_equals(node3.getSize()           , 9)
+
+
 def test_Node___str__():
     element0 = Element(name="Element 0")
     element1 = Element(name="Element 1")

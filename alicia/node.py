@@ -53,6 +53,13 @@ class Node(Element):
 
 
     # Actioners ===========================================
+    def getSize(self):
+        size = 0
+        for subElement in self.currentSubElements:
+            size += subElement.getSize()
+        return size
+
+
     # Built-ins ===========================================
     def __str__(self):
         string = "[{0}]\n".format(self.name)

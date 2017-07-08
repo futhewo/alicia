@@ -50,7 +50,15 @@ class StaticField(Element):
  
         self.content = content
 
+
     # Actioners ===========================================
+    def getSize(self):
+        """
+            Return the size of the content.
+        """
+        return self.content.getSize()
+
+
     # Built-ins ===========================================
     def __str__(self):
         """

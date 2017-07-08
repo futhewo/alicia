@@ -81,6 +81,18 @@ def test_Choice___init__():
     assert_equals(node1.futureChoice        , 1)
 
 
+def test_Choice_getSize():
+    content0 = StringContent("ABCDE")
+    element0 = CloseField(content0)
+    content1 = IntegerContent(32)
+    element1 = CloseField(content1)
+    node0 = Choice([element0, element1])
+    assert_equals(node0.getSize()       , 5)
+
+    node0.currentChoice = 1
+    assert_equals(node0.getSize()       , 4)
+
+
 def test_Choice_compose():
     content0 = StringContent("ABCDE")
     element0 = CloseField(content0)

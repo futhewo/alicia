@@ -55,6 +55,13 @@ class Choice(Node):
 
 
     # Actioners ===========================================
+    def getSize(self):
+        """
+            Return the size of the current choice.
+        """
+        return self.currentSubElements[self.currentChoice].getSize()
+
+
     # Built-ins ===========================================
     # Fuzzing =============================================
     def fuzz(self, steps):

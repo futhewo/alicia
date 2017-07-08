@@ -62,6 +62,10 @@ class Content(object):
         self.update(self.default)
 
 
+    def getSize(self):
+        return len(self.current)
+
+
     # Fuzzing =============================================
     def newCharacter(self, rand):
         """

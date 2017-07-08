@@ -75,6 +75,13 @@ class Element(object):
             self.name = "{0} {1}".format(self.type, self.elementId)
         
 
+    def getSize(self):
+        """
+            Return the size of the element.
+        """
+        return 0
+
+
     # Built-ins ===========================================
     def __str__(self):
         """

@@ -73,6 +73,11 @@ def test_Content_clean():
     assert_equals(content0.current          , "ABCDE")
 
 
+def test_Content_getSize():
+    content0 = Content("ABCDE")
+    assert_equals(content0.getSize()        , 5)
+
+
 def test_Content_newCharacter():
     content0 = Content("ABCDE")
     rand = random.Random(0)
