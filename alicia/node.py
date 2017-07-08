@@ -253,6 +253,17 @@ class Node(Element):
             subElement.clean()
 
 
+    def commit(self):
+        """
+            Set all subElements to their future value.
+            Recursive.
+        """
+        self.currentSubElements = copy.copy(self.futureSubElements)
+        # Recursive call over the subElements
+        for subElement in self.currentSubElements:
+            subElement.commit()
+
+
     # Parsing =============================================
     def parse(self, value, backward=False, root=False):
         pass

@@ -200,7 +200,7 @@ def test_Node_nodeFuzz():
     node0 = Node([element0, element1])
 
     # Mutation
-    node0.fuzz(0)
+    node0.nodeFuzz(0)
     assert_equals(node0.compose()       , ["\x00\x00\x00 ", "\x00\x00\x00 "])
     node0.clean()    
 
@@ -270,8 +270,23 @@ def test_Node_clean():
 
     element0.fuzz(0)
     element1.fuzz(0)
-    node0.currentElement = [element1, element0]
+    node0.currentSubElements = [element1, element0]
     node0.clean()
 
     assert_equals(node0.compose()       , ["ABCDE", "\x00\x00\x00 "])
+
+
+def test_Node_commit():
+    content0 = StringContent("ABCDE")
+    element0 = CloseField(content0)
+    content1 = IntegerContent(32)
+    element1 = CloseField(content1)
+    node0 = Node([element0, element1])
+
+    node0.futureSubElements = [element1, element0]
+    content0.future = "ABCDF"
+    content1.future = "\x00\x00\x00\xff"
+    node0.commit()
+
+    assert_equals(node0.compose()       , ["\x00\x00\x00\xff", "ABCDF"])
 
