@@ -57,6 +57,7 @@ def test_Node___init__():
     assert_equals(node0.defaultSubElements  , [element0])
     assert_equals(node0.currentSubElements  , [element0])
     assert_equals(node0.futureSubElements   , [element0])
+    assert_equals(element0.boundElements    , [node0])
 
 
     element1 = Element()
@@ -68,6 +69,8 @@ def test_Node___init__():
     assert_equals(node1.defaultSubElements  , [element0, element1])
     assert_equals(node1.currentSubElements  , [element0, element1])
     assert_equals(node1.futureSubElements   , [element0, element1])
+    assert_equals(element0.boundElements    , [node0, node1])
+    assert_equals(element1.boundElements    , [node1])
 
 
 def test_Node_getSize():
@@ -285,6 +288,8 @@ def test_Node_clean():
     node0.clean()
 
     assert_equals(node0.compose()       , ["ABCDE", "\x00\x00\x00 "])
+    assert_equals(node0.currentSubElements[0].boundElements, [node0])
+    assert_equals(node0.currentSubElements[1].boundElements, [node0])
 
 
 def test_Node_commit():
@@ -300,4 +305,6 @@ def test_Node_commit():
     node0.commit()
 
     assert_equals(node0.compose()       , ["\x00\x00\x00\xff", "ABCDF"])
+    assert_equals(node0.currentSubElements[0].boundElements, [node0])
+    assert_equals(node0.currentSubElements[1].boundElements, [node0])
 

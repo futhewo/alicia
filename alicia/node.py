@@ -43,7 +43,7 @@ class Node(Element):
     # Constructor =========================================
     def __init__(self, subElements, name=None, static=False, weight=1.0):
         self.defaultSubElements = subElements
-        self.currentSubElements = copy.copy(self.defaultSubElements)
+        self.setCurrentSubElements(copy.copy(self.defaultSubElements))
         self.futureSubElements = copy.copy(self.defaultSubElements)
 
         Element.__init__(self, name, static, weight)
@@ -61,6 +61,12 @@ class Node(Element):
         for subElement in self.currentSubElements:
             size += subElement.getSize()
         return size
+
+
+    def setCurrentSubElements(self, subElements):
+        self.currentSubElements = subElements
+        for subElement in subElements:
+            subElement.bound(self)
 
 
     # Built-ins ===========================================
@@ -90,6 +96,14 @@ class Node(Element):
                 if len(line) > 0: # For null lines.
                     string += "\t" + line + "\n"
         return string 
+
+
+    # Notification ========================================
+    def notify(self):
+        """
+            Push the notification to the fields that are bound to the node.
+        """
+        self.pushNotification()
 
 
     # Fuzzing =============================================
@@ -234,16 +248,16 @@ class Node(Element):
 
             # Mutation
             if oracle == ADD:
-                self.currentSubElements = self.add(self.currentSubElements, rand, index, indexes)
+                self.setCurrentSubElements(self.add(self.currentSubElements, rand, index, indexes))
 
             elif oracle == MUTATION:
-                self.currentSubElements = self.mutation(self.currentSubElements, rand, index)
+                self.setCurrentSubElements(self.mutation(self.currentSubElements, rand, index))
 
             elif oracle == SWAP:
-                self.currentSubElements = self.swap(self.currentSubElements, rand, index)
+                self.setCurrentSubElements(self.swap(self.currentSubElements, rand, index))
 
             elif oracle == REMOVE:
-                self.currentSubElements = self.remove(self.currentSubElements, rand, index, indexes)
+                self.setCurrentSubElements(self.remove(self.currentSubElements, rand, index, indexes))
 
 
     def nodeOverflow(self, steps):
@@ -259,7 +273,7 @@ class Node(Element):
             Set all subElements to their default value.
             Recursive.
         """
-        self.currentSubElements = copy.copy(self.defaultSubElements)
+        self.setCurrentSubElements(copy.copy(self.defaultSubElements))
         # Recursive call over the subElements
         for subElement in self.currentSubElements:
             subElement.clean()
@@ -271,7 +285,7 @@ class Node(Element):
             Set all subElements to their future value.
             Recursive.
         """
-        self.currentSubElements = copy.copy(self.futureSubElements)
+        self.setCurrentSubElements(copy.copy(self.futureSubElements))
         # Recursive call over the subElements
         for subElement in self.currentSubElements:
             subElement.commit()

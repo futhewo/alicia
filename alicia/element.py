@@ -109,6 +109,14 @@ class Element(object):
         pass
 
 
+    def bound(self, element):
+        """
+            Bound an element if it is not already the case.
+        """
+        if element not in self.boundElements:
+            self.boundElements.append(element)
+
+
     # Fuzzing =============================================
     def preForecast(self):
         """
