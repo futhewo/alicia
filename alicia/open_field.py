@@ -29,6 +29,7 @@
 import random
 
 from alicia.close_field import *
+from alicia.integer_content import *
 from alicia.content import *
 from alicia.utils import *
 
@@ -44,6 +45,7 @@ class OpenField(CloseField):
 
     # Constructor =========================================
     def __init__(self, content, maxSize, minSize=0, name=None, weight=1.0):
+        assert(type(content) is not IntegerContent) # IntegerContent are fixed-size.
         CloseField.__init__(self, content, name, weight)
         
         self.type = "OpenField"
