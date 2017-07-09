@@ -42,6 +42,7 @@ class PaddingField(OpenField):
 
     # Constructor =========================================
     def __init__(self, content, paddingSize, elements, name=None, weight=1.0):
+        assert(len(content.default) == 1)
         OpenField.__init__(self, content, paddingSize, 0, name, weight)
         
         self.type = "PaddingField"
@@ -50,7 +51,7 @@ class PaddingField(OpenField):
         # Covered fields
         self.elements = elements
         for element in self.elements:
-            element.boundElements.append(self)
+            element.bound(self)
 
         self.padder = content.default[0]
         self.notify()
@@ -90,7 +91,8 @@ class PaddingField(OpenField):
         size = 0
         for element in self.elements:
             size += element.getSize()
-        return self.maxSize - (size % self.maxSize)
+        size = self.maxSize - (size % self.maxSize)
+        return size % self.maxSize
 
 
     # Fuzzing =============================================

@@ -62,7 +62,8 @@ def test_PaddingField___init__():
 
     content1 = IntegerContent(12345)
     element1 = StaticField(content1, name="My StaticField")
-    element2 = PaddingField(content0, 24, [element1], name="My PaddingField", weight=2.5)
+    content2 = StringContent("~")
+    element2 = PaddingField(content2, 24, [element1], name="My PaddingField", weight=2.5)
     assert_equals(element2.type             , "PaddingField")
     assert_equals(element2.name             , "My PaddingField")
     assert_equals(element2.static           , False)
@@ -70,11 +71,11 @@ def test_PaddingField___init__():
     assert_equals(element2.boundElements    , [])
     assert_equals(element2.notifiable       , True)
     assert_equals(element2.parsed           , False)
-    assert_equals(element2.content          , content0)
-    assert_equals(element2.padder           , "#")
+    assert_equals(element2.content          , content2)
+    assert_equals(element2.padder           , "~")
     assert_equals(element2.maxSize          , 24)
     assert_equals(element2.elements         , [element1])
-    assert_equals(content0.compose()        , "#" * 20)
+    assert_equals(content2.compose()        , "~" * 20)
     assert_equals(element1.boundElements    , [element2])
 
 
@@ -132,4 +133,35 @@ def test_PaddingField_computeSize():
     element4 = PaddingField(content4, 8, [node3])
     element4.notify()
     assert_equals(element4.computeSize()       , 6)
+
+
+def test_PaddingField_notification():
+    """
+        A global test on the notification mechanism.
+    """
+    content0 = StringContent("#")
+    content1 = StringContent("1234")
+    element0 = OpenField(content1, 20)
+    element1 = PaddingField(content0, 8, [element0])
+
+    content2 = StringContent("ABCDEF")
+    content3 = IntegerContent(32)
+    element2 = OpenField(content2, 20)
+    element3 = CloseField(content3)
+    node0 = Node([element2])            # 6
+    node1 = Node([node0, element3])     # 6 + 4
+    node2 = Node([element0, element1])  # 8
+    node3 = Node([node1, node2])        # 10 + 8
+
+    content4 = StringContent("~")
+    element4 = PaddingField(content4, 9, [node3])
+    print node3.getSize()
+    assert_equals(element4.compose()        , "") # Size = 18
+
+    element2.update("ABCDEFGH")         # node0 + 2, node3 + 2 = 20
+    assert_equals(element4.compose()        , "~~~~~~~")
+
+    element0.update("1234567890")       # node2 = 16, node3 + 8 = 28
+    assert_equals(element1.compose()        , "######")
+    assert_equals(element4.compose()        , "~~~~~~~~")
 
