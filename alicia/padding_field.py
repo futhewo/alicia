@@ -34,7 +34,7 @@ from alicia.utils import *
 
 
 
-# PaddingField ############################################
+# PaddingField ################################################################
 class PaddingField(OpenField):
     """
         A field to make padding to a specific paddingBlockSize with specific occurences of paddingElement.
@@ -56,8 +56,6 @@ class PaddingField(OpenField):
         self.padder = content.default[0]
         self.notify()
         self.content.default = self.content.current # Save the default size.
-
-        self.remainingSize = 0
 
 
     # Actioners ===========================================
