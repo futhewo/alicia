@@ -21,8 +21,7 @@
 
 
 ###############################################################################
-# A field that counts the number of elements of a node.
-
+# Vocabulary structure, i.e. definition of fields and the structure that comes with it.
 
 
 # Imports #####################################################################
@@ -30,32 +29,32 @@ import random
 import string
 import copy
 
-from alicia.integer_field import *
+from alicia.open_field import *
 from alicia.utils import *
 
 
 
 # CountField ##################################################################
-class CountField(IntegerField):
+class CountField(CloseField):
     """
-        A field that counts the number of elements of a node.
+        A field that contains the number of subelements of a node field.
+        Its value is updated after the targeted elements' value list.
     """
 
     # Constructor =========================================
-    def __init__(self, node, size, endianness="be", minValue=0, maxValue=0, name=None, fuzzing=None, overflowing=None, randoming=None, fuzzingNumber=None, overflowNumber=None, randomRate=None, randomNumber=None):
-        IntegerField.__init__(self, 0, size, endianness, False, minValue, maxValue, [], name, fuzzing, overflowing, randoming, fuzzingNumber, overflowNumber, randomRate, randomNumber)
+    def __init__(self, content, element, name=None, weight=1.0):
+        assert(type(content) is IntegerContent)
+        CloseField.__init__(self, content, name, weight)
         
-        if name is None:
-            self.name = "CountField {0}".format(self.elementId)
         self.type = "CountField"
-        
-        # Covered elements.
-        self.node = node
-        node.boundElements.append(self)
+        self.setName(name)
 
-        # Other parameters
-        self.default = i2sbs(self.computeCount(), self.minSize, self.endianness)
-        self.value = self.default
+        # Covered fields
+        self.element = element
+        element.bound(self)
+
+        self.notify()
+        self.content.default = self.content.current # Save the default size.
 
 
     # Actioners ===========================================
@@ -65,64 +64,35 @@ class CountField(IntegerField):
             Return a string representing the element.
             @return (string)representation
         """
-        string = "[{0}]: ({1}) [{2}]".format(self.name, str(self.minSize), self.node.name)
+        string = "[{0}]: ({1}) {2} [".format(self.name, self.content.size, self.element.name)
         nameList = []
+        for element in self.element.currentSubElements:
+            nameList.append(element.name)
+        string += ", ".join(nameList) + "]\n"
         return string
-        
+
 
     # Notification ========================================
     def notify(self):
         """
-            Update its value with the recomputed size.
+            Update its value with the recomputed count.
         """
-        if self.notifiable:
-            self.update(i2sbs(self.computeCount(), self.minSize, self.endianness))
+        self.content.integerUpdate(self.computeCount())
+        self.pushNotification()
 
 
     def computeCount(self):
         """
-            Count the number of elements of the covered node.
+            Count the number of subelements of the given node.
         """
-        return len(self.node.subElements)
+        count = 0
+        for subElement in self.element.currentSubElements:
+            count += 1
+        return count
 
 
     # Fuzzing =============================================
-    def nope(self, steps):
-        """
-            Return a standard value.
-            @param (int)steps: the standard value reference
-        """
-        debug(">[{0}] {1} (F): Noping.".format(steps, self.name), conf.verbose)
-        self.update(i2sbs(self.computeCount(), self.minSize, self.endianness))
-
-
-    def basic(self, steps, singleChar=False):
-        """
-            Modifies the size value, while maintaining her in its bounds, without modifying the real size. It targets the bad managed size.
-            @param (int)steps
-        """
-        self.notify() # TODO:Why?
-        self.notifiable = False
-        IntegerField.basic(self, steps)
-
-
-    def overflow(self, steps):
-        """
-            Try the biggest sizes.
-            @param (int)steps
-        """
-        self.notifiable = False
-        IntegerField.overflow(self, steps)
-
-    def random(self, step):
-        """
-            Stuff the size with random chars.
-            @param (int)steps
-        """
-        self.notifiable = False
-        IntegerField.random(self, steps)
-
-
     # Parsing =============================================
-    # Inherited from node
+    def parse(self, value, backward=False, root=False):
+        pass
 
