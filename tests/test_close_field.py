@@ -78,16 +78,19 @@ def test_CloseField_update():
 def test_CloseField_preForecast():
     content0 = StringContent("ABCDE")
     element0 = CloseField(content0)
+    configuration.fuzzingNumber = 100
+    configuration.overflowNumber = 10
     element0.preForecast()
-    assert_equals(element0.fuzzNumber       , 100.0)
-    assert_equals(element0.overflowNumber   , 10.0)
+
+    assert_equals(element0.fuzzNumber       , 100)
+    assert_equals(element0.overflowNumber   , 10)
 
     element1 = CloseField(content0, weight=2.5)
     configuration.fuzzingNumber = 1000
     configuration.overflowNumber = 4
     element1.preForecast()
-    assert_equals(element1.fuzzNumber       , 2500.0)
-    assert_equals(element1.overflowNumber   , 10.0)
+    assert_equals(element1.fuzzNumber       , 2500)
+    assert_equals(element1.overflowNumber   , 10)
 
 
 def test_CloseField_fieldFuzz():
