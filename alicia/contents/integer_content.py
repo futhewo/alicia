@@ -25,8 +25,8 @@
 
 
 # Imports #####################################################################
-from configuration import *
-from utils import *
+from alicia.configuration import *
+from alicia.utils import *
 
 from content import *
 

@@ -29,8 +29,8 @@
 import random
 
 from alicia.close_field import *
-from alicia.integer_content import *
-from alicia.content import *
+from alicia.contents.integer_content import *
+from alicia.contents.content import *
 from alicia.utils import *
 
 

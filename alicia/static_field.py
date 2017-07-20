@@ -29,7 +29,7 @@
 import random
 
 from alicia.element import *
-from alicia.content import *
+from alicia.contents.content import *
 from alicia.utils import *
 
 

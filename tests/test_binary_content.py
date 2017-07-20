@@ -29,7 +29,7 @@
 from nose.tools import *
 import random
 
-from alicia.binary_content import *
+from alicia.contents.binary_content import *
 
 
 

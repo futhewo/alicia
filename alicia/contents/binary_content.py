@@ -25,32 +25,45 @@
 
 
 # Imports #####################################################################
+import bitarray
+
 from content import *
-from configuration import *
-from utils import *
+from alicia.configuration import *
+from alicia.utils import *
 
 
-
-# CarefulContent ##############################################################
-class CarefulContent(Content):
+# BinaryContent ###############################################################
+class BinaryContent(Content):
     """
         Defines constraints on the content of a field.
-        Will use values to look like the default value.
+        Values are bitarrays.
     """
 
     # Constructor =========================================
     def __init__(self, value):
         Content.__init__(self, value)
-        self.type = "CarefulContent"
-
+        self.type = "BinaryContent"
+        self.binaryCurrent = bitarray.bitarray()
+        self.binaryCurrent.frombytes(value)
 
     # Actioners ===========================================
+    def update(self, value):
+        self.current = value
+        self.binaryCurrent = bitarray.bitarray()
+        self.binaryCurrent.frombytes(value)
+
+
+    def binaryUpdate(self, value):
+        self.binaryCurrent = value
+        self.current = self.binaryCurrent.tobytes()
+
+
     # Fuzzing =============================================
     def newCharacter(self, rand):
         """
             Return a new character concording with this type.
         """
-        return rand.choice(list(self.default))
+        return chr(rand.randint(0, 255))
 
 
     def fuzz(self, minSize, maxSize, rand, steps):
@@ -62,8 +75,18 @@ class CarefulContent(Content):
             @param (int)steps
         """
         debug("  Fuzzing as {0}".format(self.type), configuration.verbose)
-        value = ""
-        for i in range(rand.randint(minSize, maxSize)):
-            value += self.newCharacter(rand)
-        self.update(value)
+        # Sequential bit flip
+        if steps < len(self.binaryCurrent):
+            # Bit flip
+            binaryValue = self.binaryCurrent
+            binaryValue[steps] ^= True
+            self.binaryUpdate(binaryValue)
+
+        # Random bit flips
+        else:
+            indexes = generateIndexes(len(self.binaryCurrent), rand, configuration.randomness)
+            binaryValue = self.binaryCurrent
+            for index in indexes:
+                binaryValue[index] ^= True
+            self.binaryUpdate(binaryValue)
 

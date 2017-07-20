@@ -25,53 +25,32 @@
 
 
 # Imports #####################################################################
-from configuration import *
-from utils import *
+from content import *
+from alicia.configuration import *
+from alicia.utils import *
 
 
 
-# Content #####################################################################
-class Content(object):
+# CarefulContent ##############################################################
+class CarefulContent(Content):
     """
         Defines constraints on the content of a field.
+        Will use values to look like the default value.
     """
 
     # Constructor =========================================
     def __init__(self, value):
-        self.type = "Content"
-
-        self.default = value
-        self.current = value
-        self.future = value
+        Content.__init__(self, value)
+        self.type = "CarefulContent"
 
 
     # Actioners ===========================================
-    def update(self, value):
-        self.current = value
-
-
-    def compose(self):
-        return self.current
-
-
-    def commit(self):
-        self.update(self.future)
-
-
-    def clean(self):
-        self.update(self.default)
-
-
-    def getSize(self):
-        return len(self.current)
-
-
     # Fuzzing =============================================
     def newCharacter(self, rand):
         """
             Return a new character concording with this type.
         """
-        return chr(rand.randint(0, 255))
+        return rand.choice(list(self.default))
 
 
     def fuzz(self, minSize, maxSize, rand, steps):

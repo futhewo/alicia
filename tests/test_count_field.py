@@ -28,8 +28,8 @@
 # Imports #####################################################################
 from nose.tools import *
 
-from alicia.string_content import *
-from alicia.integer_content import *
+from alicia.contents.string_content import *
+from alicia.contents.integer_content import *
 from alicia.static_field import *
 from alicia.count_field import *
 from alicia.node import *

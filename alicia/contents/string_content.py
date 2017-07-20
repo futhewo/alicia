@@ -28,8 +28,8 @@
 import string
 
 from content import *
-from configuration import *
-from utils import *
+from alicia.configuration import *
+from alicia.utils import *
 
 
 # StringContent ###############################################################

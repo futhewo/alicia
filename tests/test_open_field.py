@@ -30,8 +30,8 @@ from nose.tools import *
 
 from alicia.configuration import *
 from alicia.open_field import *
-from alicia.integer_content import *
-from alicia.string_content import *
+from alicia.contents.integer_content import *
+from alicia.contents.string_content import *
 from alicia.utils import *
 
 
@@ -58,7 +58,7 @@ def test_OpenField___init__():
     assert_equals(element0.minSize          , 0)
     assert_equals(element0.maxSize          , 32)
 
-    content1 = IntegerContent(12345)
+    content1 = StringContent("1234")
     element1 = OpenField(content1, 4, minSize=2, name="My OpenField", weight=2.0)
     assert_equals(element1.type             , "OpenField")
     assert_equals(element1.name             , "My OpenField")

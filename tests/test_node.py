@@ -32,8 +32,8 @@ from alicia.configuration import *
 from alicia.node import *
 from alicia.element import *
 from alicia.close_field import *
-from alicia.string_content import *
-from alicia.integer_content import *
+from alicia.contents.string_content import *
+from alicia.contents.integer_content import *
 from alicia.utils import *
 
 

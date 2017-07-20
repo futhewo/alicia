@@ -30,8 +30,8 @@ from nose.tools import *
 
 from alicia.configuration import *
 from alicia.close_field import *
-from alicia.integer_content import *
-from alicia.string_content import *
+from alicia.contents.integer_content import *
+from alicia.contents.string_content import *
 from alicia.utils import *
 
 
