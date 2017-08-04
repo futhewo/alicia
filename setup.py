@@ -31,8 +31,8 @@ config = {
     'author': '@fuzztheworld',
     'url': '',
     'download_url': '',
-    'version': '0.101',
-    'install_requires': ['nose'],
+    'version': '0.200',
+    'install_requires': ['nose', 'bitarray'],
     'packages': ['alicia'],
     'scripts': [],
     'name': 'alicia'
