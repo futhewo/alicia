@@ -38,7 +38,7 @@ class Choice(Node):
     """
         A node element. It has subelements.
         Manipulating means playing with its subelements.
-        Ultimately it chosses one of its subelements.
+        Ultimately it chooses one of its subelements.
     """
 
     # Constructor =========================================
